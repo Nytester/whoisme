@@ -124,7 +124,8 @@ export default function Home() {
         .hcard .stretch { position: absolute; inset: 0; z-index: 4; }
         .hcard .ico { width: 34px; height: 34px; color: var(--text); }
         .hcard .ico svg { width: 100%; height: 100%; }
-        .hcard h3 { font-family: var(--font-serif); font-weight: 500; font-size: clamp(24px,2.6vw,32px); letter-spacing: -0.01em; color: var(--text); margin-top: auto; }
+        .hcard .card-text { margin-top: auto; }
+        .hcard h3 { font-family: var(--font-serif); font-weight: 500; font-size: clamp(24px,2.6vw,32px); letter-spacing: -0.01em; color: var(--text); }
         .hcard .sub { color: var(--text-2); font-size: 15px; margin-top: 7px; }
         .hcard .arr { position: absolute; right: 24px; bottom: 28px; z-index: 3; color: var(--text-3); pointer-events: none; transition: transform .4s var(--ease), color .3s; }
         .hcard .arr svg { width: 22px; height: 22px; display: block; }
@@ -284,17 +285,32 @@ export default function Home() {
         }
 
         body.leaving main { opacity: 0; transform: scale(.972); }
-        @media (max-width: 900px) { .bento2 { grid-template-columns: 1fr; } .card-tall { min-height: 240px; } }
+        @media (max-width: 900px) {
+          .bento2 { grid-template-columns: 1fr; gap: 14px; }
+          .col-left { gap: 14px; order: 2; }
+          .card-projects { order: 1; }
+          .card-contact { order: 3; }
+
+          .card-tall { min-height: unset; }
+          .hcard { flex-direction: row; align-items: center; gap: 14px; padding: 18px 20px; min-height: unset; border-radius: 20px; }
+          .hcard .ico { display: none; }
+          .hcard .card-text { margin-top: 0; order: 1; flex: 1 1 auto; min-width: 0; }
+          .hcard h3 { font-size: 19px; }
+          .hcard .sub { font-size: 13px; margin-top: 3px; }
+          .hcard .arr { position: static; order: 3; flex: none; }
+          .hcard .arr svg { width: 20px; height: 20px; }
+
+          .card-projects .appstrip { position: static; order: 2; flex: none; width: 64px; height: 64px; margin: 0; border-radius: 14px; -webkit-mask-image: none; mask-image: none; }
+          .card-projects .track { height: 100%; padding: 0; align-items: center; }
+          .card-projects .appicon { width: 64px; height: 64px; border-radius: 14px; }
+
+          .card-contact .bubbles { position: static; order: 2; flex: none; margin: 0; align-items: center; }
+        }
         @media (max-width: 540px) { .cmsg-bubble { max-width: 94%; } }
         @media (max-width: 480px) {
           .home-top { padding-top: clamp(40px, 8vh, 72px); }
-          .hcard { padding: 22px; min-height: 168px; }
-          .hcard .arr { right: 20px; bottom: 22px; }
-          .appstrip { margin: -4px -22px 0; }
-          .appstrip .track { padding: 6px 22px; }
-          .appicon { width: 62px; height: 62px; border-radius: 15px; }
-          .appicon svg { width: 26px; height: 26px; }
-          .bubbles { top: 20px; right: 18px; }
+          .hcard { padding: 16px 18px; }
+          .card-projects .appstrip, .card-projects .appicon { width: 54px; height: 54px; }
           .askgpt { padding: 14px 16px calc(24px + env(safe-area-inset-bottom)); }
           .chips { max-width: 100%; }
           .chat-header { padding: 0 16px; }
@@ -319,36 +335,40 @@ export default function Home() {
         <main className="wrap" style={{ paddingBottom: 300 }}>
           <section className="bento2">
             <div className="col-left">
-              <div className="hcard reveal r-3">
+              <div className="hcard card-about reveal r-3">
                 <Link className="stretch" to="/about" onClick={(e) => handleCardClick(e, '/about')} aria-label="About" />
                 <span className="ico">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
                     <circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5S20 17 20 21"/>
                   </svg>
                 </span>
-                <h3>About</h3>
-                <div className="sub">A bit about myself.</div>
+                <div className="card-text">
+                  <h3>About</h3>
+                  <div className="sub">A bit about myself.</div>
+                </div>
                 <span className="arr">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
                 </span>
               </div>
 
-              <div className="hcard reveal r-4">
+              <div className="hcard card-work reveal r-4">
                 <Link className="stretch" to="/work" onClick={(e) => handleCardClick(e, '/work')} aria-label="Work Experience" />
                 <span className="ico">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
                     <rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 13h18"/>
                   </svg>
                 </span>
-                <h3>Work Experience</h3>
-                <div className="sub">My career as a Cloud Engineer.</div>
+                <div className="card-text">
+                  <h3>Work Experience</h3>
+                  <div className="sub">My career as a Software Engineer.</div>
+                </div>
                 <span className="arr">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
                 </span>
               </div>
             </div>
 
-            <div className="hcard card-tall reveal r-4">
+            <div className="hcard card-tall card-projects reveal r-4">
               <Link className="stretch" to="/projects" onClick={(e) => handleCardClick(e, '/projects')} aria-label="Projects" />
               <div className="appstrip">
                 <div className="track">
@@ -367,14 +387,16 @@ export default function Home() {
                   <path d="M3 7a2 2 0 0 1 2-2h4l2 2.5h6a2 2 0 0 1 2 2V18a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
                 </svg>
               </span>
-              <h3 style={{ marginTop: 14 }}>Projects</h3>
-              <div className="sub">Cloud tools &amp; platforms I've been building.</div>
+              <div className="card-text" style={{ marginTop: 14 }}>
+                <h3>Projects</h3>
+                <div className="sub">Personal projects I've been working on.</div>
+              </div>
               <span className="arr">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
               </span>
             </div>
 
-            <div className="hcard card-tall reveal r-5">
+            <div className="hcard card-tall card-contact reveal r-5">
               <Link className="stretch" to="/contact" onClick={(e) => handleCardClick(e, '/contact')} aria-label="Contact" />
               <div className="bubbles">
                 <div className="bubble blue"><span className="d"/><span className="d"/><span className="d"/></div>
@@ -387,8 +409,10 @@ export default function Home() {
                   <path d="M22 3 11 14M22 3l-7 18-4-7-7-4z"/>
                 </svg>
               </span>
-              <h3 style={{ marginTop: 14 }}>Contact</h3>
-              <div className="sub">Email, LinkedIn, carrier pigeon…</div>
+              <div className="card-text" style={{ marginTop: 14 }}>
+                <h3>Contact</h3>
+                <div className="sub">Email, LinkedIn, carrier pigeon…</div>
+              </div>
               <span className="arr">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
               </span>
@@ -412,7 +436,7 @@ export default function Home() {
           <input
             ref={inputRef}
             type="text"
-            placeholder="Ask me anything about Roshan…"
+            placeholder="What would you like to know?"
             autoComplete="off"
             value={input}
             onChange={e => setInput(e.target.value)}
